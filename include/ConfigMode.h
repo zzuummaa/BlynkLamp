@@ -73,10 +73,8 @@ void restartMCU() {
 
 void enterConfigMode()
 {
-  randomSeed(ESP.getChipId());
-  const uint32_t unique = random(0xFFFFF);
   char ssidBuff[64];
-  snprintf(ssidBuff, sizeof(ssidBuff), "%s-%05X", PRODUCT_WIFI_SSID, unique);
+  snprintf(ssidBuff, sizeof(ssidBuff), "%s", PRODUCT_WIFI_SSID);
 
   WiFi.mode(WIFI_OFF);
   delay(100);

@@ -14,7 +14,7 @@ assert iface.status() in \
 print('Disconnected from previous wifi network')
 
 profile = pywifi.Profile()
-profile.ssid = 'Our Product-E6B71'
+profile.ssid = 'Our Product'
 profile.auth = const.AUTH_ALG_OPEN
 profile.akm.append(const.AKM_TYPE_NONE)
 profile.cipher = const.CIPHER_TYPE_CCMP
