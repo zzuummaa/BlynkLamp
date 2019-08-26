@@ -34,8 +34,8 @@ if iface.status() == const.IFACE_CONNECTED:
 
     URL = "http://192.168.4.1/config"
     PARAMS = {
-        'ssid':'lalala2',
-        'pass':'blablabla',
+        'ssid':'zzuummaa-2GHz',
+        'pass':'fom12345',
         'blynk':'b4e0b3453ffb400cb6c049f401b75af2',
         'host':'zzuummaa.sytes.net',
         'port':'8081'
@@ -57,11 +57,11 @@ else:
     isDeviceConnected = False
 
 profile = pywifi.Profile()
-profile.ssid = 'lalala5'
+profile.ssid = 'zzuummaa-5GHz'
 profile.auth = const.AUTH_ALG_OPEN
 profile.akm.append(const.AKM_TYPE_WPA2PSK)
 profile.cipher = const.CIPHER_TYPE_CCMP
-profile.key = 'blablabla'
+profile.key = 'fom12345'
 
 tmp_profile = iface.add_network_profile(profile)
 

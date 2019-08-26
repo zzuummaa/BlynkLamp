@@ -171,7 +171,23 @@ void enterConfigMode()
 
   server.begin();
 
+  unsigned long nextScanTimeoutMs = millis();
   while (BlynkState::is(MODE_WAIT_CONFIG) || BlynkState::is(MODE_CONFIGURING)) {
+    if (millis() >= nextScanTimeoutMs && BlynkState::is(MODE_WAIT_CONFIG)) {
+        WiFi.scanNetworks(true);
+        nextScanTimeoutMs += 10000;
+    }
+    int n = WiFi.scanComplete();
+    if (n >= 0) {
+        DEBUG_PRINT(n + String(" network(s) found"));
+        if (configStore.flagConfig) {
+            for (int i = 0; i < n; ++i) if (WiFi.SSID(i) == configStore.wifiSSID) BlynkState::set(MODE_CONNECTING_NET);
+        }
+//        for (int i = 0; i < n; i++) {
+//            Serial.printf("%d: %s, Ch:%d (%ddBm) %s\n", i+1, WiFi.SSID(i).c_str(), WiFi.channel(i), WiFi.RSSI(i), WiFi.encryptionType(i) == ENC_TYPE_NONE ? "open" : "");
+//        }
+        WiFi.scanDelete();
+    }
     dnsServer.processNextRequest();
     server.handleClient();
     if (BlynkState::is(MODE_WAIT_CONFIG) && WiFi.softAPgetStationNum() > 0) {
@@ -206,7 +222,7 @@ void enterConnectNet() {
   if (WiFi.status() == WL_CONNECTED) {
     BlynkState::set(MODE_CONNECTING_CLOUD);
   } else {
-    BlynkState::set(MODE_ERROR);
+    BlynkState::set(MODE_WAIT_CONFIG);
   }
 }
 

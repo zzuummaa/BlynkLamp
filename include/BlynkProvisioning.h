@@ -20,6 +20,7 @@ extern "C" {
 #include "ConfigMode.h"
 #include "Indicator.h"
 #include "OTA.h"
+#include "RunMode.h"
 
 inline
 void BlynkState::set(State m) {
@@ -55,7 +56,7 @@ public:
     case MODE_CONFIGURING:       enterConfigMode();    break;
     case MODE_CONNECTING_NET:    enterConnectNet();    break;
     case MODE_CONNECTING_CLOUD:  enterConnectCloud();  break;
-    case MODE_RUNNING:           Blynk.run();          break;
+    case MODE_RUNNING:           enterRunMode();       break;
     case MODE_OTA_UPGRADE:       enterOTA();           break;
     case MODE_SWITCH_TO_STA:     enterSwitchToSTA();   break;
     case MODE_RESET_CONFIG:      enterResetConfig();   break;
